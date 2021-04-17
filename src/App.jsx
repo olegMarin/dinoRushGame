@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import './App.css'
 import Viewport from './Viewport'
+import Dino from './components/Dino'
 
 const dt = 15
 const scrollSpeed = 200
