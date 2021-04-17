@@ -151,6 +151,8 @@ const App = () => {
           isOnWay(x + playerWidth, playerY, newX + playerWidth, newPlayerY, rect[0], rect[2], rect[1])
         )
         if (onRect) {
+          if (onRect === up) // up
+          if (onRect === down) // down
           setPlayerFalling(null)
           newPlayerY = onRect[1]
           setCurrent(onRect)
