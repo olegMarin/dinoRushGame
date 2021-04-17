@@ -1,6 +1,7 @@
 
 import Dino from './components/Dino'
 import platformGvg from "./assets/platform.svg"
+import littleCloud from "./assets/littleCloud.svg"
 
 const Viewport = ({ x, y, width, height, playerY, rects, onClick }) => {
     const leftX = x - width / 2
@@ -14,6 +15,20 @@ const Viewport = ({ x, y, width, height, playerY, rects, onClick }) => {
             style={{ width, height }}
             onClick={onClick}
         >
+            <div
+                className="topCloud"
+                style={{ width: 350, height: 60 }}
+            >
+                <img src={littleCloud}  />
+
+            </div>
+            <div
+                className="bottomCloud"
+                style={{ width: 400, height: 60 }}
+            >
+                <img src={littleCloud}  />
+
+            </div>
             <div
                 className="viewport-inner"
                 style={{ transform: `translate3d(${-leftX}px, ${-topY}px, 0)` }}
@@ -34,7 +49,7 @@ const Viewport = ({ x, y, width, height, playerY, rects, onClick }) => {
             </div>
             <div
                 className="player"
-                style={{ transform: `translate3d(${width / 2}px, ${height / 2 + playerY - y}px, 0)` }}
+                style={{ transform: `translate3d(${width / 3}px, ${height / 2 + playerY - y}px, 0)` }}
             >
                 <Dino
 

@@ -12,7 +12,9 @@
 }
 
 .viewport {
-  border: 1px solid red;
+  border: 1px solid rgb(0, 217, 255);
+  background:linear-gradient(25deg,  #63c6f3, #add8e6);
+  background: linear-gradient(25deg,#1db8ff,#c1edff);
   position: absolute;
   top: 100px;
   left: 30px;
@@ -31,4 +33,22 @@
   width: 150px;
   height: var(--d);
   margin-top: calc(-1 *  var(--d));
+}
+
+.topCloud{
+  position: absolute;
+  top:20px;
+  right:30px;
+}
+
+.bottomCloud{
+  position: absolute;
+  bottom:200px;
+  right:50px;
+}
+ 
+p{
+  font: arial;
+  font-size: 12;
+  color:#00628f
 }
