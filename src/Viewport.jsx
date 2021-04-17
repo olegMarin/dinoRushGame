@@ -35,6 +35,7 @@ const Viewport = ({ x, y, width, height, playerY, rects, onClick }) => {
                 style={{ transform: `translate3d(${width / 2}px, ${height / 2 + playerY - y}px, 0)` }}
             >
                 <Dino
+                    
                     isStopped={false}
                     isPaused={false}
                 />

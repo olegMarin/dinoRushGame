@@ -28,7 +28,7 @@
 .player {
   --d: 150px;
   position: absolute;
-  width: 100px;
+  width: 150px;
   height: var(--d);
   margin-top: calc(-1 *  var(--d));
 }
