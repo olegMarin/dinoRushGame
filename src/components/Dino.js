@@ -17,9 +17,9 @@ export default function Dino(props) {
     return (
       <Lottie options={defaultOptions}
               height={150}
-              width={150}
-              isStopped={this.state.isStopped}
-              isPaused={this.state.isPaused}/>
+              width={100}
+              isStopped={props.isStopped}
+              isPaused={props.isPaused}/>
 
     );
   

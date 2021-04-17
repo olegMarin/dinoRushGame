@@ -1,3 +1,6 @@
+
+import Dino from './components/Dino'
+
 const Viewport = ({ x, y, width, height, playerY, rects, onClick }) => {
     const leftX = x - width / 2
     const rightX = x + width / 2
@@ -31,6 +34,10 @@ const Viewport = ({ x, y, width, height, playerY, rects, onClick }) => {
                 className="player"
                 style={{ transform: `translate3d(${width / 2}px, ${height / 2 + playerY - y}px, 0)` }}
             >
+                <Dino
+                    isStopped={false}
+                    isPaused={false}
+                />
             </div>
         </div>
     )
