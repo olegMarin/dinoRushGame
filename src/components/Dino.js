@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import Lottie from 'react-lottie';
 import * as defaultData from '../assets/lotties/dinorush.json'
-import * as bookData from '../assets/lotties/dinorush.json'
-import * as glassesData from '../assets/lotties/dinorush.json'
-import * as bookGlassesData from '../assets/lotties/dinorush.json'
+import * as bookData from '../assets/lotties/dinoBook.json'
+import * as glassesData from '../assets/lotties/dinoGlasses.json'
+import * as bookGlassesData from '../assets/lotties/dinoGlassesBook.json'
 
 export default function Dino(props) {
 
@@ -16,9 +16,6 @@ export default function Dino(props) {
         preserveAspectRatio: 'xMidYMid slice'
       }
     }; 
-
-
-
 
     switch(props.type) {
       case 'default':
