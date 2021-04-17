@@ -1,26 +1,51 @@
 import React, { Component } from "react";
 import Lottie from 'react-lottie';
-import * as animationData from '../assets/lotties/dinorush.json'
+import * as defaultData from '../assets/lotties/dinorush.json'
+import * as bookData from '../assets/lotties/dinorush.json'
+import * as glassesData from '../assets/lotties/dinorush.json'
+import * as bookGlassesData from '../assets/lotties/dinorush.json'
 
 export default function Dino(props) {
 
 
-  const defaultOptions = {
+  let defaultOptions = {
       loop: true,
       autoplay: true, 
-      animationData: animationData,
+      animationData: defaultData,
       rendererSettings: {
         preserveAspectRatio: 'xMidYMid slice'
       }
     }; 
 
-    return (
-      <Lottie options={defaultOptions}
-              height={150}
-              width={100}
-              isStopped={props.isStopped}
-              isPaused={props.isPaused}/>
 
-    );
-  
+
+
+    switch(props.type) {
+      case 'default':
+        defaultOptions.animationData = defaultData
+        break;
+      
+      case 'book':
+        defaultOptions.animationData = bookData
+        break;
+
+      case 'glasses':
+        defaultOptions.animationData = glassesData
+        break;
+
+      case 'book_glasses':
+        defaultOptions.animationData = bookGlassesData
+        break;
+
+      default:
+        defaultOptions.animationData = defaultData
+
+         return (
+          <Lottie options={defaultOptions}
+                  height={150}
+                  width={150}
+                  isStopped={props.isStopped}
+                  isPaused={props.isPaused}/>
+
+        );
 }
