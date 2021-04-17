@@ -39,7 +39,7 @@ export default function Dino(props) {
 
       default:
         defaultOptions.animationData = defaultData
-
+    }
          return (
           <Lottie options={defaultOptions}
                   height={159}
@@ -48,4 +48,5 @@ export default function Dino(props) {
                   isPaused={props.isPaused}/>
 
         );
+    
 }

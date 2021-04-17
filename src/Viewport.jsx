@@ -1,5 +1,6 @@
 
 import Dino from './components/Dino'
+import platformGvg from "./assets/platform.svg"
 
 const Viewport = ({ x, y, width, height, playerY, rects, onClick }) => {
     const leftX = x - width / 2
@@ -26,6 +27,7 @@ const Viewport = ({ x, y, width, height, playerY, rects, onClick }) => {
                                 className="rect"
                                 style={{ left: x0, top: y0, width: x1 - x0, height: y1 - y0 }}
                             >
+                                <img src={platformGvg}  />
                             </div>
                         ))
                 }
@@ -35,7 +37,7 @@ const Viewport = ({ x, y, width, height, playerY, rects, onClick }) => {
                 style={{ transform: `translate3d(${width / 2}px, ${height / 2 + playerY - y}px, 0)` }}
             >
                 <Dino
-                    
+
                     isStopped={false}
                     isPaused={false}
                 />
