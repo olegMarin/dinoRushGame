@@ -45,8 +45,9 @@ export default function Dino(props) {
                   height={159}
                   width={167}
                   isStopped={props.isStopped}
-                  isPaused={props.isPaused}/>
-
+                  isPaused={props.isPaused}
+                  style={{overflow: 'visible', paddingTop: 26}}/>
+                  
         );
     
 }
