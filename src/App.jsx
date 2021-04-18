@@ -199,7 +199,9 @@ const App = () => {
         onClick={jump}
       />
       <pre className="info">
-        Any key to jump
+        Нажми любую клавишу или кликни любое место в игре чтобы прыгнуть.
+        <br/>
+        Выбирай ответ на вопрос запрыгивая или спускаясь на платформу
         <br/>
         FPS: {fpsCounter.value && fpsCounter.value.toFixed()}
       </pre>

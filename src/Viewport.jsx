@@ -2,6 +2,7 @@
 import Dino from './components/Dino'
 import platformGvg from "./assets/platform.svg"
 import littleCloud from "./assets/littleCloud.svg"
+import bigCloud from "./assets/bigCloud.svg"
 
 const Viewport = ({ x, y, width, height, playerY, rects, onClick }) => {
     const leftX = x - width / 2
@@ -16,15 +17,22 @@ const Viewport = ({ x, y, width, height, playerY, rects, onClick }) => {
             onClick={onClick}
         >
             <div
+                className="mainCloud"
+                style={{ width: 300, height: 300 }}
+            >
+                <img src={bigCloud}  />
+
+            </div>
+            <div
                 className="topCloud"
-                style={{ width: 350, height: 60 }}
+                style={{ width: 300, height: 60 }}
             >
                 <img src={littleCloud}  />
 
             </div>
             <div
                 className="bottomCloud"
-                style={{ width: 400, height: 60 }}
+                style={{ width: 350, height: 60 }}
             >
                 <img src={littleCloud}  />
 
