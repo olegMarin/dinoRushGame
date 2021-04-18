@@ -33,6 +33,7 @@
   width: 150px;
   height: var(--d);
   margin-top: calc(-1 *  var(--d));
+  border: 1px solid red;
 }
 
 .topCloud{
