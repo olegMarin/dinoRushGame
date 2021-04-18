@@ -193,11 +193,11 @@ const App = () => {
   }, [current])
 
   useEffect(() => {
-    axi("start.php", null, { qr: new Date()}).then(
+    axi("start.php", "read", { qr: new Date()}).then(
       (result) => {
         if (result.type == 'approved') {
-            setBase(result.base)
-            console.log(result.base)
+            setBase(result.answers)
+            console.log(result.answers)
         } else {
         }
       },
