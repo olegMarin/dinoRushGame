@@ -196,8 +196,8 @@ const App = () => {
     axi("start.php", "read", { qr: new Date()}).then(
       (result) => {
         if (result.type == 'approved') {
-            setBase(result.answers)
-            console.log(result.answers)
+            setBase(result.questions)
+            console.log(result.questions)
         } else {
         }
       },
