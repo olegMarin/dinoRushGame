@@ -1,12 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import axi from './axiosf'
+import mockRead from './mockRead'
+
+const isMockRead = true
+
+const Wrapper = () => {
+  const [base, setBase] = useState(null)
+
+  useEffect(() => {
+    if (isMockRead) {
+      setBase(mockRead)
+    } else {
+      axi("start.php", "read", { qr: new Date()}).then(
+        (result) => {
+          if (result.type == 'approved') {
+              setBase(result.answers)
+              console.log(result.answers)
+          } else {
+          }
+        },
+        (e) => { console.log(e) }
+      )
+    }
+  }, [])
+
+  return base ? <App base={base} /> : null
+}
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Wrapper />
   </React.StrictMode>,
   document.getElementById('root')
 );
