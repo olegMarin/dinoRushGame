@@ -6,7 +6,8 @@ import platformGvg3 from "./assets/platform3.svg"
 import littleCloud from "./assets/littleCloud.svg"
 import bigCloud from "./assets/bigCloud.svg"
 
-const Viewport = ({ x, y, width, height, playerY, rects, onClick, ach=[], star=false }) => {
+
+const Viewport = ({ x, y, width, height, playerY, rects, onClick, question, isCorrectUp , ach=[], star=false }) => {
     const leftX = x - width / 2
     const rightX = x + width / 2
     const topY = y - height / 2
@@ -39,13 +40,14 @@ let type = 'default'
                 style={{ width: 300, height: 300 }}
             >
                 <img src={bigCloud}  />
-
+                <div className="mainCloudText">{question.text}</div>
             </div>
             <div
                 className="topCloud"
                 style={{ width: 300, height: 60 }}
             >
                 <img src={littleCloud}  />
+                <div className="topCloudText">{isCorrectUp ? question.correctAnswer : question.wrongAnswer}</div>
 
             </div>
             {star&&<div
@@ -67,6 +69,7 @@ let type = 'default'
                 style={{ width: 350, height: 60 }}
             >
                 <img src={littleCloud}  />
+                <div className="bottomCloudText">{isCorrectUp ? question.wrongAnswer : question.correctAnswer}</div>
 
             </div>
             <div

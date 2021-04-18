@@ -2,6 +2,20 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import './App.css'
 import Viewport from './Viewport'
 
+const memoize = f => {
+  const memo = {}
+  return arg => {
+    if (memo.hasOwnProperty(arg)) {
+      return memo[arg]
+    }
+    return (memo[arg] = f(arg))
+  }
+}
+
+const isCorrectUp = memoize((idq) => Math.random() > 0.5)
+
+const random = n => Math.round(Math.random() * n)
+
 const dt = 15
 const scrollSpeed = 200
 const timeForQuestion = 3500
@@ -49,7 +63,6 @@ const isOnWay = (x0, y0, x1, y1, rectX0, rectX1, rectY) => {
   if (x1 < rectX0 || x1 > rectX1) return false
   const [a, b, c] = calcLineCoefs(x0, y0, x1, y1)
   return Math.sign(calcLineEq(a, b, c, rectX0, rectY) * calcLineEq(a, b, c, rectX1, rectY)) === -1
-  
 }
 
 class Animation {
@@ -129,6 +142,9 @@ const App = ({
   const [animateY, setAnimateY] = useState(null)
   const [playerFalling, setPlayerFalling] = useState(null)
 
+  const [question, setQuestion] = useState(base.questions[0])
+  const [achievements, setAchievements] = useState([])
+
   useEffect(() => {
     const interval = setInterval(() => setT(Date.now() - t0.current), dt)
     document.addEventListener('keypress', jump)
@@ -154,11 +170,15 @@ const App = ({
           isOnWay(x + playerWidth, playerY, newX + playerWidth, newPlayerY, rect[0], rect[2], rect[1])
         )
         if (onRect) {
-          if (onRect === up) {
-            // up
-          }
-          if (onRect === down) {
-            // down
+          if ((onRect === up) || (onRect === down)) {
+            const isCorrect = onRect === up && isCorrectUp(question.idq) || onRect === down && !isCorrectUp(question.idq)
+            if (isCorrect) {
+              if (question.typeAchievement) {
+                setAchievements([...achievements, question.typeAchievement])
+              }
+            }
+            console.log(isCorrect)
+            setQuestion(base.questions[random(base.questions.length)])
           }
           setPlayerFalling(null)
           newPlayerY = onRect[1]
@@ -208,6 +228,8 @@ const App = ({
         height={700}
         rects={rects}
         onClick={jump}
+        question={question}
+        isCorrectUp={isCorrectUp(question.idq)}
       />
       <pre className="info">
         Нажми любую клавишу или кликни любое место в игре чтобы прыгнуть.
@@ -215,7 +237,8 @@ const App = ({
         Выбирай ответ на вопрос запрыгивая или спускаясь на платформу
         <br/>
         FPS: {fpsCounter.value && fpsCounter.value.toFixed()}
-        {JSON.stringify(base)}
+        <br/>
+        Achievements: {JSON.stringify(achievements)}
       </pre>
     </div>
   )
