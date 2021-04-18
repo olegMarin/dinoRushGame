@@ -19,7 +19,7 @@ window.random = random
 
 const dt = 15
 const scrollSpeed = 200
-const timeForQuestion = 1500
+const timeForQuestion = 3500
 const platformHeight = 30
 const heightDiff = 200
 const cameraHeightChangeDuration = 400
@@ -225,7 +225,9 @@ const App = ({
       }
     }
 
-    setX(newX)
+    if (interval) {
+      setX(newX)
+    }
 
   }, [t, x, y, current, up, down, playerY, playerFalling, animateY, prevT])
 
