@@ -1,15 +1,34 @@
 
 import Dino from './components/Dino'
-import platformGvg from "./assets/platform.svg"
+import platformGvg1 from "./assets/platform.svg"
+import platformGvg2 from "./assets/platform2.svg"
+import platformGvg3 from "./assets/platform3.svg"
 import littleCloud from "./assets/littleCloud.svg"
 import bigCloud from "./assets/bigCloud.svg"
 
-const Viewport = ({ x, y, width, height, playerY, rects, onClick, question, isCorrectUp }) => {
+
+const Viewport = ({ x, y, width, height, playerY, rects, onClick, question, isCorrectUp , ach=[], star=false }) => {
     const leftX = x - width / 2
     const rightX = x + width / 2
     const topY = y - height / 2
     const bottomY = y + height / 2
-
+let platformGvg = platformGvg1
+let type = 'default'
+    if (ach.indexOf('lvl1')!=-1){
+        platformGvg = platformGvg2
+    }
+    if (ach.indexOf('lvl2')!=-1){
+        platformGvg = platformGvg3
+    }
+    if (ach.indexOf('book')!=-1){
+        type = 'book'
+    }
+    if (ach.indexOf('glasses')!=-1){
+        type = 'glasses'
+    }
+    if (ach.indexOf('glasses')!=-1&&ach.indexOf('book')!=-1){
+        type = 'book_glasses'
+    }
     return (
         <div
             className="viewport"
@@ -31,6 +50,20 @@ const Viewport = ({ x, y, width, height, playerY, rects, onClick, question, isCo
                 <div className="topCloudText">{isCorrectUp ? question.correctAnswer : question.wrongAnswer}</div>
 
             </div>
+            {star&&<div
+                
+                style={{ 
+                    position: 'absolute',
+                    width: 200, 
+                    height: 200,
+                    top: (height/2)-100,
+                    left: (width/2)-100
+                    }}
+                >
+                    
+
+                </div>
+            }
             <div
                 className="bottomCloud"
                 style={{ width: 350, height: 60 }}
@@ -62,7 +95,7 @@ const Viewport = ({ x, y, width, height, playerY, rects, onClick, question, isCo
                 style={{ transform: `translate3d(${width / 3}px, ${height / 2 + playerY - y}px, 0)` }}
             >
                 <Dino
-
+                    type={type}
                     isStopped={false}
                     isPaused={false}
                 />
