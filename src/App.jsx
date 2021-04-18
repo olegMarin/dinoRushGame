@@ -192,7 +192,6 @@ const App = ({
     setAnimateY(new Animation({ from: y, to: current[1], duration: cameraHeightChangeDuration }))
   }, [current])
 
-
   const jump = useCallback(() => {
     if (!playerFalling) {
       setPlayerFalling(new BallisticAnimation({ from: playerY, v0: - jumpStartSpeed, a: G }))
