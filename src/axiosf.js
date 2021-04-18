@@ -9,7 +9,7 @@ function axi(url, method, params) {
                     'charset': 'utf-8',
                     'Access-Control-Allow-Headers': '*',
                     'ReferrerPolicy': "unsafe-url"},
-                url: 'http://api.dinorush.businessmod.ru/' + url,
+                url: 'http://api.dinorush.businessmod.ru/game/' + url,
                 data: {
                     "jsonrpc": "2.0",
                     "id": time(),
