@@ -1,8 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import './App.css'
 import Viewport from './Viewport'
-import axi from './axiosf'
-window.axi = axi
 
 const dt = 15
 const scrollSpeed = 200
@@ -13,6 +11,7 @@ const cameraHeightChangeDuration = 400
 const G = 1000
 const jumpStartSpeed = 800
 const playerWidth = 100
+const playerLeftMargin = 100
 
 const createPlatform = (x0, y0) => [x0, y0, x0 + scrollSpeed * timeForQuestion / 1000, y0 + platformHeight]
 
@@ -113,7 +112,9 @@ window.SlidingMedian = SlidingMedian
 
 const fpsCounter = new SlidingMedian(60)
 
-const App = () => {
+const App = ({
+  base
+}) => {
   const [t, setT] = useState(0)
   const prevT = usePrev(t)
   const t0 = useRef(Date.now())
@@ -127,7 +128,6 @@ const App = () => {
   const [playerY, setPlayerY] = useState(current[1])
   const [animateY, setAnimateY] = useState(null)
   const [playerFalling, setPlayerFalling] = useState(null)
-  const [base, setBase] = useState(null)
 
   useEffect(() => {
     const interval = setInterval(() => setT(Date.now() - t0.current), dt)
@@ -142,7 +142,7 @@ const App = () => {
     if (prevT !== undefined && prevT !== t) fpsCounter.push(1000 / (t - prevT))
     const newX = prevT !== undefined ? x + (t - prevT) * scrollSpeed / 1000 : x
 
-    if (!playerFalling && newX > current[2]) {
+    if (!playerFalling && newX - playerLeftMargin > current[2]) {
       setPlayerFalling(new BallisticAnimation({ from: playerY, v0: 0, a: G }))
     }
 
@@ -192,20 +192,8 @@ const App = () => {
     setAnimateY(new Animation({ from: y, to: current[1], duration: cameraHeightChangeDuration }))
   }, [current])
 
-  useEffect(() => {
-    axi("start.php", "read", { qr: new Date()}).then(
-      (result) => {
-        if (result.type == 'approved') {
-            setBase(result.answers)
-            console.log(result.answers)
-        } else {
-        }
-      },
-      (e) => { console.log(e) })
-  }, [])
 
   const jump = useCallback(() => {
-    console.log(playerFalling)
     if (!playerFalling) {
       setPlayerFalling(new BallisticAnimation({ from: playerY, v0: - jumpStartSpeed, a: G }))
     }
@@ -228,6 +216,7 @@ const App = () => {
         Выбирай ответ на вопрос запрыгивая или спускаясь на платформу
         <br/>
         FPS: {fpsCounter.value && fpsCounter.value.toFixed()}
+        {JSON.stringify(base)}
       </pre>
     </div>
   )
