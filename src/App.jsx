@@ -151,7 +151,7 @@ const App = ({
   const [animateY, setAnimateY] = useState(null)
   const [playerFalling, setPlayerFalling] = useState(null)
 
-  const [question, setQuestion] = useState(base.questions[0])
+  const [question, setQuestion] = useState(base[0])
   const [achievements, setAchievements] = useState([])
 
   useEffect(() => {
@@ -191,7 +191,7 @@ const App = ({
               }
             }
             console.log(isCorrect)
-            if (qids.length === base.questions.length) {
+            if (qids.length === base.length) {
               console.log('game over')
               console.log(interval)
               clearInterval(interval)
@@ -200,7 +200,7 @@ const App = ({
             } else {
               let nextQuestion
               do {
-                nextQuestion = base.questions[random(base.questions.length)]
+                nextQuestion = base[random(base.length)]
               } while (qids.includes(nextQuestion.idq))
               setQuestion(nextQuestion)
             }
