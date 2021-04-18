@@ -12,7 +12,7 @@ function axi(url, method, params) {
                 url: 'http://api.dinorush.businessmod.ru/game/' + url,
                 data: {
                     "jsonrpc": "2.0",
-                    "id": time(),
+                    "id": new Date(),
                     "method": method,
                     "params": params
                 },
@@ -28,4 +28,3 @@ function axi(url, method, params) {
                 });
         });  
 };  
-    

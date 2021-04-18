@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import './App.css'
 import Viewport from './Viewport'
+import axi from './axiosf'
+window.axi = axi
 
 const dt = 15
 const scrollSpeed = 200
@@ -125,6 +127,7 @@ const App = () => {
   const [playerY, setPlayerY] = useState(current[1])
   const [animateY, setAnimateY] = useState(null)
   const [playerFalling, setPlayerFalling] = useState(null)
+  const [base, setBase] = useState(null)
 
   useEffect(() => {
     const interval = setInterval(() => setT(Date.now() - t0.current), dt)
@@ -162,12 +165,16 @@ const App = () => {
           setCurrent(onRect)
         }
       }
-      setPlayerY(newPlayerY)
+      if (playerY !== newPlayerY) {
+        setPlayerY(newPlayerY)
+      }
     }
 
     if (animateY) {
       const [value, isDone] = animateY.calc()
-      setY(value)
+      if (y !== value) {
+        setY(value)
+      }
       if (isDone) {
         setAnimateY(null)
       }
@@ -184,6 +191,18 @@ const App = () => {
     setRects([...rects, ...answerPlatforms])
     setAnimateY(new Animation({ from: y, to: current[1], duration: cameraHeightChangeDuration }))
   }, [current])
+
+  useEffect(() => {
+    axi("start.php", null, { qr: new Date()}).then(
+      (result) => {
+        if (result.type == 'approved') {
+            setBase(result.base)
+            console.log(result.base)
+        } else {
+        }
+      },
+      (e) => { console.log(e) })
+  }, [])
 
   const jump = useCallback(() => {
     console.log(playerFalling)
