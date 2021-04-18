@@ -192,20 +192,6 @@ const App = ({
     setAnimateY(new Animation({ from: y, to: current[1], duration: cameraHeightChangeDuration }))
   }, [current])
 
-<<<<<<< HEAD
-  useEffect(() => {
-    axi("start.php", "read", { qr: new Date()}).then(
-      (result) => {
-        if (result.type == 'approved') {
-            setBase(result.questions)
-            console.log(result.questions)
-        } else {
-        }
-      },
-      (e) => { console.log(e) })
-  }, [])
-=======
->>>>>>> 7d376cb4ceb4533a5a4932ddbf6c633a6ffe97c2
 
   const jump = useCallback(() => {
     if (!playerFalling) {
