@@ -12,13 +12,14 @@ const memoize = f => {
   }
 }
 
-const isCorrectUp = memoize((idq) => Math.random() > 0.5)
+const isCorrectUp = memoize(() => Math.random() > 0.5)
 
-const random = n => Math.round(Math.random() * n)
+const random = n => Math.floor(Math.random() * n)
+window.random = random
 
 const dt = 15
 const scrollSpeed = 200
-const timeForQuestion = 3500
+const timeForQuestion = 1500
 const platformHeight = 30
 const heightDiff = 200
 const cameraHeightChangeDuration = 400
@@ -125,6 +126,14 @@ window.SlidingMedian = SlidingMedian
 
 const fpsCounter = new SlidingMedian(60)
 
+const qids = []
+let interval = null
+
+const sendCorrect = (isCorrect, question) => {
+  console.log(isCorrect, question)
+  // send to backend
+}
+
 const App = ({
   base
 }) => {
@@ -146,7 +155,7 @@ const App = ({
   const [achievements, setAchievements] = useState([])
 
   useEffect(() => {
-    const interval = setInterval(() => setT(Date.now() - t0.current), dt)
+    interval = setInterval(() => setT(Date.now() - t0.current), dt)
     document.addEventListener('keypress', jump)
     return () => {
       clearInterval(interval)
@@ -155,6 +164,7 @@ const App = ({
   })
 
   useEffect(() => {
+    if (!interval) return
     if (prevT !== undefined && prevT !== t) fpsCounter.push(1000 / (t - prevT))
     const newX = prevT !== undefined ? x + (t - prevT) * scrollSpeed / 1000 : x
 
@@ -171,14 +181,29 @@ const App = ({
         )
         if (onRect) {
           if ((onRect === up) || (onRect === down)) {
-            const isCorrect = onRect === up && isCorrectUp(question.idq) || onRect === down && !isCorrectUp(question.idq)
+            qids.push(question.idq)
+            const { idq, typeAchievement } = question
+            const isCorrect = onRect === up && isCorrectUp(idq) || onRect === down && !isCorrectUp(idq)
+            sendCorrect(isCorrect, question)
             if (isCorrect) {
-              if (question.typeAchievement) {
-                setAchievements([...achievements, question.typeAchievement])
+              if (typeAchievement && !achievements.includes(typeAchievement)) {
+                setAchievements([...achievements, typeAchievement])
               }
             }
             console.log(isCorrect)
-            setQuestion(base.questions[random(base.questions.length)])
+            if (qids.length === base.questions.length) {
+              console.log('game over')
+              console.log(interval)
+              clearInterval(interval)
+              interval = null
+              // end
+            } else {
+              let nextQuestion
+              do {
+                nextQuestion = base.questions[random(base.questions.length)]
+              } while (qids.includes(nextQuestion.idq))
+              setQuestion(nextQuestion)
+            }
           }
           setPlayerFalling(null)
           newPlayerY = onRect[1]
@@ -230,6 +255,7 @@ const App = ({
         onClick={jump}
         question={question}
         isCorrectUp={isCorrectUp(question.idq)}
+        ach={achievements}
       />
       <pre className="info">
         Нажми любую клавишу или кликни любое место в игре чтобы прыгнуть.
@@ -239,6 +265,8 @@ const App = ({
         FPS: {fpsCounter.value && fpsCounter.value.toFixed()}
         <br/>
         Achievements: {JSON.stringify(achievements)}
+        <br/>
+        {JSON.stringify(qids)}
       </pre>
     </div>
   )
